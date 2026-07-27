@@ -1,11 +1,9 @@
 # Google Auto `-ai`
-Automatically appends `-ai` to every Google search, helping suppress Google's AI Overview results.
+Finds a way to hide the dumb AI overview
 
 ## Features
-- Automatically appends `-ai` to Google searches.
 - Works from the browser address bar.
 - Works when searching directly on Google.
-- Prevents redirect loops using a one-time `_noai=1` marker.
 - No permissions required.
 
 ## Why?
