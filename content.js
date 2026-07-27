@@ -1,27 +1,35 @@
 (() => {
-    // Only run on Google search result pages.
-    if (location.pathname !== "/search")
-        return;
+    function removeAIOverview() {
+        const headings = document.querySelectorAll("h1, h2, h3, div");
 
-    const url = new URL(location.href);
+        headings.forEach(el => {
+            const text = el.innerText?.trim();
 
-    // We've already rewritten this search.
-    if (url.searchParams.has("_noai"))
-        return;
+            if (text === "AI Overview") {
+                // Find a reasonable container to remove
+                let container = el;
 
-    const query = url.searchParams.get("q");
+                for (let i = 0; i < 6; i++) {
+                    if (container.parentElement) {
+                        container = container.parentElement;
+                    }
+                }
 
-    if (!query)
-        return;
+                container.remove();
+            }
+        });
+    }
 
-    // Don't append twice if the user intentionally searched for "-ai".
-    if (/\s-ai(\s|$)/i.test(query))
-        return;
+    // Initial scan
+    removeAIOverview();
 
-    url.searchParams.set("q", `${query} -ai`);
+    // Watch for Google's dynamic loading
+    const observer = new MutationObserver(() => {
+        removeAIOverview();
+    });
 
-    // Marker to prevent any possibility of a redirect loop.
-    url.searchParams.set("_noai", "1");
-
-    location.replace(url.toString());
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 })();
