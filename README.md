@@ -1,4 +1,4 @@
-# Google Auto `-ai`
+# Google Hide AI Overview container
 Finds a way to hide the dumb AI overview
 
 ## Features
